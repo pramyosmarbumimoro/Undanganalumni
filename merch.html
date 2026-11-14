@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Merchandise & Pre-Order - HUT ke-40 PRAMYOSMAR</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #070505;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .glass-card {
+            background: rgba(20, 15, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glow-red-yellow {
+            box-shadow: 0 0 25px rgba(225, 29, 72, 0.15), 0 0 50px rgba(245, 158, 11, 0.1);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #fb7185 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-mesh {
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(225, 29, 72, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(245, 158, 11, 0.15) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-mesh p-4 selection:bg-red-600 selection:text-white">
+
+    <div class="max-w-md mx-auto w-full space-y-4 py-2">
+        <!-- TOP NAVIGATION -->
+        <div class="flex justify-between items-center bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400">
+                    <i class="fa-solid fa-shirt"></i>
+                </div>
+                <div>
+                    <h1 class="text-xs font-bold text-white">Official Merchandise</h1>
+                    <p class="text-[9px] text-slate-400">HUT ke-40 PRAMYOSMAR</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+
+        <!-- HEADER INFO PO -->
+        <div class="glass-card p-4 rounded-2xl space-y-2 glow-red-yellow border border-red-500/30 text-center">
+            <span class="bg-red-500/10 text-red-400 border border-red-500/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Pre-Order Dibuka</span>
+            <h2 class="text-base font-extrabold text-white">Amankan Atribut <span class="text-gradient">Eksklusifmu!</span></h2>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+                Batas Akhir Pre-Order: <strong class="text-amber-400">28 November 2026</strong>. Pesan sekarang sebelum kehabisan!
+            </p>
+        </div>
+
+        <!-- KATALOG PRODUK -->
+        <div class="space-y-3 pt-1">
+            <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider px-1"><i class="fa-solid fa-box-open mr-1"></i> Pilihan Merchandise</h3>
+            
+            <!-- Produk 1: Gantungan Kunci -->
+            <div class="glass-card p-3 rounded-2xl space-y-3 border border-slate-800">
+                <div class="aspect-video rounded-xl bg-slate-900 overflow-hidden relative border border-slate-700/50">
+                    <img src="1794638188042.jpg" alt="Gantungan Kunci Akrilik" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg shadow">
+                        Rp 8.000
+                    </div>
+                </div>
+                <div class="space-y-1 px-1">
+                    <h4 class="font-bold text-white text-xs">Gantungan Kunci Akrilik Exclusive</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Akrilik tebal berkualitas tinggi dengan cetakan logo 4 dekade Pramyosmar bolak-balik.</p>
+                </div>
+                <button onclick="pesanMerch('Gantungan Kunci Akrilik', '8.000')" class="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Pesan via WhatsApp (Kak Zazkia)
+                </button>
+            </div>
+
+            <!-- Produk 2: Stiker Pack -->
+            <div class="glass-card p-3 rounded-2xl space-y-3 border border-slate-800">
+                <div class="aspect-video rounded-xl bg-slate-900 overflow-hidden relative border border-slate-700/50">
+                    <img src="Kolase Mockup Stiker HUT KE 40.png" alt="Sticker Pack Exclusive" class="w-full h-full object-cover">
+                    <div class="absolute top-2 right-2 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg shadow">
+                        Rp 5.000
+                    </div>
+                </div>
+                <div class="space-y-1 px-1">
+                    <h4 class="font-bold text-white text-xs">Sticker Pack Exclusive</h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">Berisi set stiker vinyl tahan air & anti gores, cocok untuk helm, laptop, atau handphone.</p>
+                </div>
+                <button onclick="pesanMerch('Sticker Pack Exclusive', '5.000')" class="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-xs py-2.5 rounded-xl transition shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Pesan via WhatsApp (Kak Zazkia)
+                </button>
+            </div>
+
+            <!-- Produk 3: Paket Bundling -->
+            <div class="glass-card p-3 rounded-2xl space-y-3 border border-amber-500/40 bg-slate-900/90">
+                <div class="flex justify-between items-center px-1 pt-1">
+                    <span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[9px] font-bold px-2.5 py-0.5 rounded-full uppercase">Paling Laris & Hemat</span>
+                    <span class="text-amber-400 font-extrabold text-xs">Rp 12.000</span>
+                </div>
+                <div class="space-y-1 px-1">
+                    <h4 class="font-bold text-white text-xs">Paket Bundling (Ganci + Sticker Pack)</h4>
+                    <p class="text-[11px] text-slate-300 leading-relaxed">Dapatkan 1 Pcs Gantungan Kunci Akrilik dan 1 Set Sticker Pack Exclusive sekaligus dengan harga lebih hemat!</p>
+                </div>
+                <button onclick="pesanMerch('Paket Bundling (Ganci + Sticker Pack)', '12.000')" class="w-full bg-gradient-to-r from-amber-600 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-slate-950 font-bold text-xs py-3 rounded-xl transition shadow-lg shadow-amber-900/30 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Pesan Paket Bundling (Kak Zazkia)
+                </button>
+            </div>
+        </div>
+
+        <!-- NARAHUBUNG INFO -->
+        <div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 text-xs">
+            <h3 class="font-bold text-white uppercase tracking-wider text-[11px]"><i class="fa-solid fa-headset mr-1 text-emerald-400"></i> Informasi & Konfirmasi Pembayaran</h3>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+                Setelah menekan tombol di atas, Anda akan diarahkan langsung ke WhatsApp narahubung merchandise kami, <strong class="text-white">Kak Zazkia (+62 831-1532-6021)</strong>, untuk proses pencatatan pemesanan dan pembayaran.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-3 text-[10px] text-slate-500 border-t border-white/5 bg-slate-950/60 mt-4">
+        <p>&copy; 2026 Panitia Pelaksana HUT ke-40 PRAMYOSMAR SMK KAL 1 Surabaya</p>
+    </footer>
+
+    <!-- JAVASCRIPT ORDER WHATSAPP -->
+    <script>
+        function pesanMerch(namaProduk, harga) {
+            const noWA = "6283115326021"; // Nomor Kak Zazkia
+            const pesan = `Halo Kak Zazkia, saya ingin melakukan Pre-Order Merchandise HUT ke-40 PRAMYOSMAR:\n\n*Produk:* ${namaProduk}\n*Harga:* Rp ${harga}\n\nMohon info selanjutnya untuk pembayaran dan pengambilan. Terima kasih!`;
+            const urlWA = `https://wa.me/${noWA}?text=${encodeURIComponent(pesan)}`;
+            window.open(urlWA, '_blank');
+        }
+    </script>
+</body>
+  </html>
+  
