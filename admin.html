@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Admin & Scanner Absensi - HUT ke-40 PRAMYOSMAR</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Scanner Library (jsQR) -->
+    <script src="https://cdn.jsdelivr.net/npm/jsQR@1.4.0/dist/jsQR.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #070505;
+            color: #f1f5f9;
+        }
+        .glass-card {
+            background: rgba(20, 15, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glow-red-yellow {
+            box-shadow: 0 0 25px rgba(225, 29, 72, 0.2), 0 0 50px rgba(245, 158, 11, 0.12);
+        }
+    </style>
+</head>
+<body class="bg-[#070505] min-h-screen flex flex-col justify-between p-4 sm:p-8">
+
+    <div class="max-w-2xl mx-auto w-full space-y-6">
+        <!-- TOP NAVIGATION -->
+        <div class="flex justify-between items-center bg-slate-900/80 p-4 rounded-2xl border border-slate-800">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h1 class="text-sm font-bold text-white">Portal Admin Absensi</h1>
+                    <p class="text-[10px] text-slate-400">HUT ke-40 PRAMYOSMAR</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Undangan
+            </a>
+        </div>
+
+        <!-- LOGIN CARD (TERSEMBUNYI SECARA DEFAULT, PIN TETAP 4040) -->
+        <div id="loginCard" class="glass-card p-6 sm:p-8 rounded-2xl space-y-4 glow-red-yellow max-w-md mx-auto text-center">
+            <div class="w-12 h-12 bg-amber-500/20 rounded-2xl flex items-center justify-center mx-auto text-amber-400 text-xl border border-amber-500/30">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div class="space-y-1">
+                <h2 class="text-lg font-bold text-white">Autentikasi Panitia</h2>
+                <p class="text-xs text-slate-400">Masukkan PIN Admin untuk membuka sistem absensi.</p>
+            </div>
+            <div class="space-y-3 pt-2">
+                <input type="password" id="adminPin" placeholder="Masukkan PIN Rahasia" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-center tracking-widest text-white focus:outline-none focus:border-amber-500 transition">
+                <button type="button" onclick="verifyAdminPin()" class="w-full bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-semibold text-xs py-3 rounded-xl transition shadow-md cursor-pointer">
+                    Masuk ke Dashboard
+                </button>
+            </div>
+        </div>
+
+        <!-- DASHBOARD ADMIN (MUNCUL SETELAH LOGIN SUKSES) -->
+        <div id="adminDashboard" class="hidden space-y-6">
+            
+            <!-- PANEL KONTROL KAMERA / SCANNER -->
+            <div class="glass-card p-6 rounded-2xl space-y-4 glow-red-yellow">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <h2 class="text-sm font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-camera text-amber-400"></i> Live QR Scanner Kamera
+                    </h2>
+                    <button type="button" onclick="logoutAdmin()" class="text-[10px] bg-red-950 text-red-300 border border-red-800 px-2.5 py-1 rounded-lg">Logout</button>
+                </div>
+
+                <div class="space-y-3 text-center">
+                    <p class="text-xs text-slate-400">Arahkan kamera HP/Laptop ke QR Code E-Tiket alumni untuk check-in otomatis.</p>
+                    
+                    <!-- Kotak Viewfinder Kamera -->
+                    <div class="relative w-full max-w-xs mx-auto bg-black rounded-2xl overflow-hidden border-2 border-amber-500/40 aspect-square shadow-inner">
+                        <video id="scannerVideo" class="w-full h-full object-cover" playsinline></video>
+                        <canvas id="scannerCanvas" class="hidden"></canvas>
+                        
+                        <!-- Garis animasi scanner -->
+                        <div id="scanOverlay" class="absolute inset-0 border-4 border-amber-500/20 flex items-center justify-center pointer-events-none">
+                            <div class="w-48 h-48 border border-amber-400/60 rounded-xl relative animate-pulse"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-center gap-2 pt-2">
+                        <button type="button" onclick="startCamera()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow">
+                            <i class="fa-solid fa-play mr-1"></i> Mulai Kamera
+                        </button>
+                        <button type="button" onclick="stopCamera()" class="bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow">
+                            <i class="fa-solid fa-stop mr-1"></i> Matikan Kamera
+                        </button>
+                    </div>
+
+                    <!-- Hasil Scan Real-time -->
+                    <div id="scanResultBox" class="hidden p-4 rounded-xl bg-slate-950 border border-emerald-500/40 text-xs space-y-1.5 text-left">
+                        <p class="font-bold text-emerald-400 text-sm" id="scanStatusTitle"><i class="fa-solid fa-circle-check"></i> CHECK-IN BERHASIL!</p>
+                        <p class="text-white"><strong class="text-slate-400">Nama:</strong> <span id="scanNama"></span></p>
+                        <p class="text-white"><strong class="text-slate-400">Angkatan:</strong> <span id="scanAngkatan"></span></p>
+                        <p class="text-white"><strong class="text-slate-400">Waktu Check-in:</strong> <span id="scanWaktu"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABEL KEHADIRAN -->
+            <div class="glass-card p-6 rounded-2xl space-y-4 glow-red-yellow">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-users mr-1"></i> Daftar Kehadiran Real-time</h3>
+                    <span id="totalHadirBadge" class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-bold">0 Orang</span>
+                </div>
+
+                <div class="overflow-x-auto max-h-60 overflow-y-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-950 text-slate-400 uppercase text-[10px] sticky top-0">
+                            <tr>
+                                <th class="p-2.5">Nama</th>
+                                <th class="p-2.5">Angkatan</th>
+                                <th class="p-2.5">Status Check-in</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hadirTableBody" class="divide-y divide-slate-800">
+                            <!-- Data dimuat otomatis -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-6 text-xs text-slate-500 border-t border-white/5 bg-slate-950/40 mt-10">
+        <p>&copy; 2026 Panitia Pelaksana HUT ke-40 PRAMYOSMAR SMK KAL 1 Surabaya</p>
+    </footer>
+
+    <!-- JAVASCRIPT ADMIN & SCANNER KAMERA -->
+    <script>
+        function getDatabase() {
+            return JSON.parse(localStorage.getItem('pramyosmar_rsvp')) || [];
+        }
+
+        function saveDatabase(data) {
+            localStorage.setItem('pramyosmar_rsvp', JSON.stringify(data));
+        }
+
+        // Verifikasi PIN Admin tetap 4040 tanpa kelihatan tulisannya
+        function verifyAdminPin() {
+            const pinVal = document.getElementById('adminPin').value;
+            if (pinVal === '4040') {
+                document.getElementById('loginCard').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                renderAdminTable();
+            } else {
+                alert("PIN Admin Salah! (Default: 4040)");
+            }
+        }
+
+        function logoutAdmin() {
+            stopCamera();
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('loginCard').classList.remove('hidden');
+            document.getElementById('adminPin').value = '';
+        }
+
+        function renderAdminTable() {
+            let db = getDatabase();
+            let hadirList = db.filter(item => item.status === 'Hadir');
+            const totalHadirBadge = document.getElementById('totalHadirBadge');
+            const hadirTableBody = document.getElementById('hadirTableBody');
+            
+            if (totalHadirBadge) totalHadirBadge.textContent = `${hadirList.length} Orang`;
+            if (!hadirTableBody) return;
+
+            hadirTableBody.innerHTML = '';
+            if (hadirList.length === 0) {
+                hadirTableBody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-500 italic">Belum ada data konfirmasi hadir.</td></tr>`;
+                return;
+            }
+
+            hadirList.forEach(item => {
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-900/50";
+                tr.innerHTML = `
+                    <td class="p-2.5 font-medium text-white">${item.nama}</td>
+                    <td class="p-2.5 text-slate-400">${item.angkatan}</td>
+                    <td class="p-2.5">
+                        ${item.checkedIn ? 
+                            `<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded text-[10px] font-bold">Hadir (${item.checkInTime})</span>` : 
+                            `<span class="bg-rose-500/20 text-rose-400 border border-rose-500/30 px-2 py-0.5 rounded text-[10px]">Belum Check-in</span>`
+                        }
+                    </td>
+                `;
+                hadirTableBody.appendChild(tr);
+            });
+        }
+
+        // Variabel Kamera & Scanner Real-time
+        let videoStream = null;
+        const videoElement = document.getElementById('scannerVideo');
+        const canvasElement = document.getElementById('scannerCanvas');
+        const canvasContext = canvasElement.getContext('2d', { willReadFrequently: true });
+        let scanningActive = false;
+
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then(function(stream) {
+                    videoStream = stream;
+                    videoElement.srcObject = stream;
+                    videoElement.setAttribute("playsinline", true);
+                    videoElement.play();
+                    scanningActive = true;
+                    requestAnimationFrame(scanTick);
+                })
+                .catch(function(err) {
+                    alert("Gagal mengakses kamera: Pastikan izin kamera diaktifkan di browser Anda.");
+                });
+        }
+
+        function stopCamera() {
+            scanningActive = false;
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+            }
+            videoElement.srcObject = null;
+        }
+
+        function scanTick() {
+            if (!scanningActive) return;
+
+            if (videoElement.readyState === videoElement.HAVE_ENOUGH_DATA) {
+                canvasElement.height = videoElement.videoHeight;
+                canvasElement.width = videoElement.videoWidth;
+                canvasContext.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+                
+                const imageData = canvasContext.getImageData(0, 0, canvasElement.width, canvasElement.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert",
+                });
+
+                if (code) {
+                    processScannedData(code.data);
+                    // Jeda sejenak setelah scan sukses agar tidak double-scan
+                    scanningActive = false;
+                    setTimeout(() => { if(videoStream) scanningActive = true; }, 3000);
+                }
+            }
+            requestAnimationFrame(scanTick);
+        }
+
+        function processScannedData(dataString) {
+            let parts = dataString.split('|');
+            if (parts.length >= 3 && parts[0] === 'PRAMYOSMAR40') {
+                let scannedNama = parts[1];
+                let scannedAngkatan = parts[2];
+                let currentTime = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+                let db = getDatabase();
+                let alum = db.find(item => item.nama.toLowerCase() === scannedNama.toLowerCase());
+
+                if (alum) {
+                    alum.checkedIn = true;
+                    alum.checkInTime = currentTime;
+                    saveDatabase(db);
+                    renderAdminTable();
+
+                    document.getElementById('scanResultBox').classList.remove('hidden');
+                    document.getElementById('scanNama').textContent = alum.nama;
+                    document.getElementById('scanAngkatan').textContent = alum.angkatan;
+                    document.getElementById('scanWaktu').textContent = currentTime;
+                } else {
+                    db.push({
+                        nama: scannedNama,
+                        angkatan: scannedAngkatan,
+                        status: 'Hadir',
+                        checkedIn: true,
+                        checkInTime: currentTime
+                    });
+                    saveDatabase(db);
+                    renderAdminTable();
+
+                    document.getElementById('scanResultBox').classList.remove('hidden');
+                    document.getElementById('scanStatusTitle').textContent = "PESERTA BARU TERDAFTAR & CHECK-IN!";
+                    document.getElementById('scanNama').textContent = scannedNama;
+                    document.getElementById('scanAngkatan').textContent = scannedAngkatan;
+                    document.getElementById('scanWaktu').textContent = currentTime;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
