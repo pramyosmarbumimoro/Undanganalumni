@@ -257,44 +257,53 @@
         }
 
         function processScannedData(dataString) {
-            let parts = dataString.split('|');
+            let cleanData = dataString.trim();
+            let parts = cleanData.split('|');
+            
+            let scannedNama = "";
+            let scannedAngkatan = "Alumni";
+
             if (parts.length >= 3 && parts[0] === 'PRAMYOSMAR40') {
-                let scannedNama = parts[1];
-                let scannedAngkatan = parts[2];
-                let currentTime = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                scannedNama = parts[1].trim();
+                scannedAngkatan = parts[2].trim();
+            } else {
+                scannedNama = cleanData;
+            }
 
-                let db = getDatabase();
-                let alum = db.find(item => item.nama.toLowerCase() === scannedNama.toLowerCase());
+            let currentTime = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+            let db = getDatabase();
+            let alum = db.find(item => item.nama.trim().toLowerCase() === scannedNama.toLowerCase());
 
-                if (alum) {
-                    alum.checkedIn = true;
-                    alum.checkInTime = currentTime;
-                    saveDatabase(db);
-                    renderAdminTable();
+            if (alum) {
+                alum.checkedIn = true;
+                alum.checkInTime = currentTime;
+                saveDatabase(db);
+                renderAdminTable();
 
-                    document.getElementById('scanResultBox').classList.remove('hidden');
-                    document.getElementById('scanNama').textContent = alum.nama;
-                    document.getElementById('scanAngkatan').textContent = alum.angkatan;
-                    document.getElementById('scanWaktu').textContent = currentTime;
-                } else {
-                    db.push({
-                        nama: scannedNama,
-                        angkatan: scannedAngkatan,
-                        status: 'Hadir',
-                        checkedIn: true,
-                        checkInTime: currentTime
-                    });
-                    saveDatabase(db);
-                    renderAdminTable();
+                document.getElementById('scanResultBox').classList.remove('hidden');
+                document.getElementById('scanStatusTitle').innerHTML = `<i class="fa-solid fa-circle-check"></i> CHECK-IN BERHASIL!`;
+                document.getElementById('scanNama').textContent = alum.nama;
+                document.getElementById('scanAngkatan').textContent = alum.angkatan;
+                document.getElementById('scanWaktu').textContent = currentTime;
+            } else {
+                db.push({
+                    nama: scannedNama,
+                    angkatan: scannedAngkatan,
+                    status: 'Hadir',
+                    checkedIn: true,
+                    checkInTime: currentTime
+                });
+                saveDatabase(db);
+                renderAdminTable();
 
-                    document.getElementById('scanResultBox').classList.remove('hidden');
-                    document.getElementById('scanStatusTitle').textContent = "PESERTA BARU TERDAFTAR & CHECK-IN!";
-                    document.getElementById('scanNama').textContent = scannedNama;
-                    document.getElementById('scanAngkatan').textContent = scannedAngkatan;
-                    document.getElementById('scanWaktu').textContent = currentTime;
-                }
+                document.getElementById('scanResultBox').classList.remove('hidden');
+                document.getElementById('scanStatusTitle').innerHTML = `<i class="fa-solid fa-user-plus"></i> PESERTA BARU TERDAFTAR & CHECK-IN!`;
+                document.getElementById('scanNama').textContent = scannedNama;
+                document.getElementById('scanAngkatan').textContent = scannedAngkatan;
+                document.getElementById('scanWaktu').textContent = currentTime;
             }
         }
     </script>
 </body>
-</html>
+                                                                                </html>
+    
