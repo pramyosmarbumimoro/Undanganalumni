@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Galeri Kenangan - HUT ke-40 PRAMYOSMAR</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #070505;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .glass-card {
+            background: rgba(20, 15, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glow-red-yellow {
+            box-shadow: 0 0 25px rgba(225, 29, 72, 0.15), 0 0 50px rgba(245, 158, 11, 0.1);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #fb7185 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-mesh {
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(225, 29, 72, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(245, 158, 11, 0.15) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-mesh p-4 selection:bg-red-600 selection:text-white">
+
+    <div class="max-w-md mx-auto w-full space-y-4 py-2">
+        <!-- TOP NAVIGATION -->
+        <div class="flex justify-between items-center bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400">
+                    <i class="fa-solid fa-images"></i>
+                </div>
+                <div>
+                    <h1 class="text-xs font-bold text-white">Galeri Kenangan</h1>
+                    <p class="text-[9px] text-slate-400">HUT ke-40 PRAMYOSMAR</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+
+        <!-- HEADER TITLE -->
+        <div class="text-center space-y-1.5 px-2">
+            <span class="bg-red-500/10 text-red-400 border border-red-500/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Arsip Dokumentasi</span>
+            <h2 class="text-xl font-extrabold text-white">Jejak Langkah <span class="text-gradient">4 Dekade</span></h2>
+            <p class="text-slate-400 text-[11px] max-w-xs mx-auto">
+                Menjemput kenangan indah, kebersamaan, dan memori perjuangan di Ambalan Pramyosmar SMK KAL 1 Surabaya.
+            </p>
+        </div>
+
+        <!-- LINK GOOGLE DRIVE ARSIP UTAMA -->
+        <div class="glass-card p-4 rounded-2xl space-y-3 glow-red-yellow border border-amber-500/30 text-center">
+            <div class="w-10 h-10 mx-auto rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-base">
+                <i class="fa-brands fa-google-drive"></i>
+            </div>
+            <div class="space-y-1">
+                <h3 class="font-bold text-white text-xs">Arsip Foto & Video Lengkap</h3>
+                <p class="text-[11px] text-slate-300 leading-relaxed">
+                    Ingin melihat atau mengunggah dokumentasi foto jadul angkatanmu? Kunjungi folder penyimpanan resmi panitia.
+                </p>
+            </div>
+            <a href="https://drive.google.com/drive/folders/17mwm4v6AQuJ664qaCky6nxTEv8D0qAiX" target="_blank" class="inline-flex items-center justify-center gap-2 w-full bg-gradient-to-r from-amber-600 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 text-slate-950 font-bold text-xs py-2.5 rounded-xl transition shadow-lg shadow-amber-900/30">
+                <i class="fa-solid fa-folder-open"></i> Buka Google Drive Arsip
+            </a>
+        </div>
+
+        <!-- GRID KOLEKSI KENANGAN PREVIEW -->
+        <div class="space-y-3 pt-1">
+            <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider px-1"><i class="fa-solid fa-camera-retro mr-1"></i> Kilas Balik Memori</h3>
+            
+            <div class="grid grid-cols-2 gap-3">
+                <!-- Card 1 -->
+                <div class="glass-card p-2.5 rounded-xl space-y-2 border border-slate-800">
+                    <div class="aspect-square rounded-lg bg-slate-900 overflow-hidden relative border border-slate-700/50">
+                        <img src="1000568995.jpg" alt="Logo Pramyosmar" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
+                            <span class="text-[10px] font-bold text-white">Logo Resmi 40 Th</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 leading-tight">Lambang kebanggaan Ambalan Pramyosmar SMK KAL 1 Surabaya.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card p-2.5 rounded-xl space-y-2 border border-slate-800">
+                    <div class="aspect-square rounded-lg bg-slate-900 overflow-hidden relative border border-slate-700/50 flex items-center justify-center text-slate-600">
+                        <i class="fa-solid fa-people-group text-3xl text-amber-500/60"></i>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
+                            <span class="text-[10px] font-bold text-white">Reuni & Kebersamaan</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 leading-tight">Silaturahmi lintas generasi dari masa ke masa.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- INFO KONTRIBUSI FOTO -->
+        <div class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 text-xs">
+            <h3 class="font-bold text-white uppercase tracking-wider text-[11px]"><i class="fa-solid fa-circle-info mr-1 text-red-400"></i> Punya Koleksi Foto Lama?</h3>
+            <p class="text-slate-300 text-[11px] leading-relaxed">
+                Bagi alumni yang memiliki arsip foto kegiatan ambalan zaman dulu (perjusami, pelantikan, bantara, dll), silakan kirimkan langsung melalui narahubung panitia atau unggah ke folder Drive di atas agar dapat dinikmati bersama saat reuni akbar!
+            </p>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-3 text-[10px] text-slate-500 border-t border-white/5 bg-slate-950/60 mt-4">
+        <p>&copy; 2026 Panitia Pelaksana HUT ke-40 PRAMYOSMAR SMK KAL 1 Surabaya</p>
+    </footer>
+
+</body>
+          </html>
+      
