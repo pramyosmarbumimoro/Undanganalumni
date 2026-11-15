@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HUT ke-40 PRAMYOSMAR - Undangan & RSVP Alumni</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HUT ke-40 PRAMYOSMAR - SMK KAL 1 Surabaya</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -14,16 +14,19 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #070505;
             color: #f1f5f9;
-            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .glass-card {
-            background: rgba(20, 15, 15, 0.75);
+            background: rgba(20, 15, 15, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
         .glow-red-yellow {
-            box-shadow: 0 0 25px rgba(225, 29, 72, 0.2), 0 0 50px rgba(245, 158, 11, 0.12);
+            box-shadow: 0 0 25px rgba(225, 29, 72, 0.15), 0 0 50px rgba(245, 158, 11, 0.1);
         }
         .text-gradient {
             background: linear-gradient(135deg, #fb7185 0%, #fbbf24 100%);
@@ -37,256 +40,103 @@
         }
     </style>
 </head>
-<body class="bg-mesh min-h-screen flex flex-col justify-between selection:bg-red-600 selection:text-white">
+<body class="bg-mesh p-4 selection:bg-red-600 selection:text-white">
 
-    <!-- HERO SECTION (FULLSCREEN: LOGO & JUDUL) -->
-    <header class="relative min-h-screen flex flex-col items-center justify-center px-4 text-center overflow-hidden">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-red-600/15 blur-[120px] pointer-events-none rounded-full"></div>
-        <div class="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/15 blur-[120px] pointer-events-none rounded-full"></div>
-
-        <div class="relative z-10 max-w-3xl mx-auto space-y-6">
-            <div class="inline-block p-2 rounded-3xl bg-gradient-to-br from-red-600/30 to-amber-500/30 shadow-2xl mb-2">
-                <img src="1000568995.jpg" alt="Logo HUT ke-40 PRAMYOSMAR" class="w-32 h-32 sm:w-44 sm:h-44 mx-auto object-cover rounded-2xl shadow-inner">
+    <div class="max-w-md mx-auto w-full space-y-4 py-3">
+        
+        <!-- HEADER LOGO & INTRO -->
+        <div class="glass-card p-5 rounded-3xl text-center space-y-3 glow-red-yellow border border-red-500/20">
+            <div class="w-20 h-20 mx-auto rounded-2xl bg-slate-900 border border-slate-700/60 overflow-hidden shadow-lg flex items-center justify-center p-1">
+                <img src="1000568995.jpg" alt="Logo Pramyosmar" class="w-full h-full object-cover rounded-xl">
             </div>
-
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-tight">
-                PRAMYOSMAR <span class="text-gradient">40 TAHUN</span>
-            </h1>
-            <p class="text-base sm:text-xl font-medium text-slate-300 italic max-w-xl mx-auto px-4 leading-relaxed">
-                "Menjemput Jejak Langkah, Menyalakan Kembali Api Ambalan"
-            </p>
-
-            <div class="pt-10">
-                <a href="#mainContent" class="inline-flex flex-col items-center text-slate-400 hover:text-amber-400 transition duration-300">
-                    <span class="text-xs uppercase tracking-widest font-semibold mb-2">Gulir ke Bawah</span>
-                    <i class="fa-solid fa-chevron-down animate-bounce"></i>
-                </a>
+            <div class="space-y-1">
+                <span class="bg-red-500/10 text-red-400 border border-red-500/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Reuni Akbar 4 Dekade</span>
+                <h1 class="text-xl font-extrabold text-white pt-1">HUT ke-40 PRAMYOSMAR</h1>
+                <p class="text-xs text-amber-400 font-semibold">"Menjemput Jejak Langkah, Menyalakan Kembali Api Ambalan"</p>
+            </div>
+            <div class="pt-2 border-t border-white/10 flex justify-around text-center">
+                <div>
+                    <p class="text-[10px] text-slate-400 uppercase font-semibold">Tanggal</p>
+                    <p class="text-xs font-bold text-white">12 Desember 2026</p>
+                </div>
+                <div class="border-r border-white/10"></div>
+                <div>
+                    <p class="text-[10px] text-slate-400 uppercase font-semibold">Lokasi</p>
+                    <p class="text-xs font-bold text-white">SMK KAL 1 Surabaya</p>
+                </div>
             </div>
         </div>
-    </header>
 
-    <!-- MAIN CONTENT -->
-    <main id="mainContent" class="max-w-3xl mx-auto px-4 py-16 w-full space-y-8 relative z-10">
-
-        <!-- SECTION 1: DOWNLOAD UNDANGAN & JADWAL -->
-        <section class="glass-card p-6 sm:p-8 rounded-2xl text-center space-y-6 glow-red-yellow">
-            <div class="w-12 h-12 bg-gradient-to-br from-red-500/20 to-amber-500/20 rounded-xl flex items-center justify-center mx-auto border border-white/10 text-amber-400 text-lg shadow-inner">
-                <i class="fa-solid fa-file-arrow-down"></i>
-            </div>
-            
-            <div class="space-y-2">
-                <h2 class="text-xl sm:text-2xl font-bold text-white">Undangan Resmi Alumni</h2>
-                <p class="text-slate-400 text-xs sm:text-sm max-w-md mx-auto px-2">
-                    Unduh dokumen undangan resmi melalui folder Google Drive panitia untuk dibagikan ke rekan angkatan atau arsip pribadi.
-                </p>
-            </div>
-
-            <div>
-                <a href="https://drive.google.com/drive/folders/1X_o-rVsGUQITc5AOx_BZz351IHRrXUKq" target="_blank" class="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-semibold text-xs sm:text-sm px-6 py-3 rounded-xl transition duration-300 shadow-lg shadow-red-900/30">
-                    <i class="fa-solid fa-folder-open"></i> Buka Folder Undangan (Google Drive)
-                </a>
-            </div>
-
-            <div class="pt-6 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-                <div class="flex items-center gap-3 bg-slate-900/70 p-4 rounded-xl border border-slate-700/50">
-                    <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-400 text-lg flex-shrink-0">
-                        <i class="fa-regular fa-calendar"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-slate-400 uppercase font-semibold tracking-wider">Waktu Pelaksanaan</p>
-                        <p class="text-xs sm:text-sm font-bold text-slate-200">Sabtu, 12 Desember 2026</p>
-                        <p class="text-xs text-amber-400 font-semibold mt-0.5">Pukul 18.00 s.d. Selesai</p>
-                    </div>
+        <!-- APP-STYLE MENU GRID (2x2) -->
+        <div class="grid grid-cols-2 gap-3">
+            <!-- Menu 1: Registrasi / E-Tiket -->
+            <a href="reg.html" class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 hover:border-red-500/50 transition duration-300 group text-left block">
+                <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-ticket text-base"></i>
                 </div>
-
-                <div class="flex items-center gap-3 bg-slate-900/70 p-4 rounded-xl border border-slate-700/50">
-                    <div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 text-lg flex-shrink-0">
-                        <i class="fa-solid fa-location-dot"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-slate-400 uppercase font-semibold tracking-wider">Lokasi Acara</p>
-                        <p class="text-xs sm:text-sm font-bold text-slate-200">SMK KAL 1 Surabaya</p>
-                    </div>
+                <div>
+                    <h3 class="font-bold text-white text-xs">Registrasi & RSVP</h3>
+                    <p class="text-[10px] text-slate-400 leading-tight">Ambil E-Tiket QR Code kehadiranmu.</p>
                 </div>
-            </div>
-        </section>
+            </a>
 
-        <!-- SECTION 2: RSVP & QR CODE -->
-        <section class="glass-card p-6 sm:p-8 rounded-2xl space-y-6 glow-red-yellow">
-            <div class="text-center space-y-1">
-                <h2 class="text-xl sm:text-2xl font-bold text-white">Konfirmasi Kehadiran (RSVP)</h2>
-                <p class="text-slate-400 text-xs sm:text-sm">Isi formulir di bawah ini untuk pendataan absensi kehadiran acara.</p>
-            </div>
-
-            <form id="rsvpForm" class="space-y-4 max-w-lg mx-auto">
-                <div class="space-y-1.5">
-                    <label class="block text-xs font-semibold text-slate-300">Nama Lengkap & Gelar</label>
-                    <input type="text" id="nama" required class="w-full bg-slate-900/80 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition" placeholder="Contoh: Budi Santoso, S.T.">
+            <!-- Menu 2: Buku Ucapan -->
+            <a href="ucapan.html" class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 hover:border-emerald-500/50 transition duration-300 group text-left block">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-comments text-base"></i>
                 </div>
-                <div class="space-y-1.5">
-                    <label class="block text-xs font-semibold text-slate-300">Angkatan / Tahun Lulus</label>
-                    <input type="text" id="angkatan" required class="w-full bg-slate-900/80 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition" placeholder="Contoh: Angkatan 2015">
+                <div>
+                    <h3 class="font-bold text-white text-xs">Buku Ucapan</h3>
+                    <p class="text-[10px] text-slate-400 leading-tight">Kirim doa & pesan lintas alumni.</p>
                 </div>
-                <div class="space-y-1.5">
-                    <label class="block text-xs font-semibold text-slate-300">Status Kehadiran</label>
-                    <select id="status" class="w-full bg-slate-900/80 border border-slate-700/80 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500 transition">
-                        <option value="Hadir">Hadir di Lokasi</option>
-                        <option value="Berhalangan">Berhalangan Hadir</option>
-                    </select>
+            </a>
+
+            <!-- Menu 3: Merchandise -->
+            <a href="merch.html" class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 hover:border-amber-500/50 transition duration-300 group text-left block">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-shirt text-base"></i>
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-semibold text-sm py-3.5 rounded-xl transition duration-300 shadow-lg shadow-red-900/30">
-                    Kirim Konfirmasi & Generate E-Tiket
-                </button>
-            </form>
-
-            <div id="resultCard" class="hidden space-y-4 pt-6 border-t border-slate-800">
-                <div id="qrContainer" class="hidden space-y-4 text-center">
-                    <div class="bg-slate-900/90 p-5 sm:p-6 rounded-2xl border border-slate-700/60 max-w-xs mx-auto space-y-4 shadow-xl">
-                        <div>
-                            <p class="text-xs font-bold text-gradient uppercase tracking-wider mb-1">E-Tiket & QR Absensi</p>
-                            <p class="text-[11px] text-slate-400">Tunjukkan QR ini saat registrasi di SMK KAL 1 Surabaya.</p>
-                        </div>
-                        <div class="bg-white p-3 rounded-xl inline-block shadow-inner">
-                            <img id="qrImage" src="" alt="QR Code Absensi" class="w-44 h-44 mx-auto">
-                        </div>
-                        <div class="text-left text-xs text-slate-300 space-y-1 bg-slate-950 p-3 rounded-xl border border-slate-800">
-                            <p><strong class="text-amber-400">Nama:</strong> <span id="resNama"></span></p>
-                            <p><strong class="text-amber-400">Angkatan:</strong> <span id="resAngkatan"></span></p>
-                            <p><strong class="text-amber-400">Status:</strong> <span id="resStatus" class="text-emerald-400 font-bold"></span></p>
-                        </div>
-                        <button id="downloadQrBtn" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-medium text-xs py-2.5 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-md">
-                            <i class="fa-solid fa-download"></i> Download QR Code (PNG)
-                        </button>
-                    </div>
+                <div>
+                    <h3 class="font-bold text-white text-xs">Merchandise</h3>
+                    <p class="text-[10px] text-slate-400 leading-tight">Pre-Order atribut resmi (PO s.d 28 Nov).</p>
                 </div>
-                <div id="absensiMessage"></div>
-            </div>
-        </section>
+            </a>
 
-        <!-- SECTION 3: CONTACT PERSON (WHATSAPP - TANPA TEMPLATE TEKS) -->
-        <section class="glass-card p-6 sm:p-8 rounded-2xl text-center space-y-5 glow-red-yellow">
-            <h2 class="text-xl sm:text-2xl font-bold text-white">Narahubung & Layanan Informasi</h2>
-            <p class="text-slate-400 text-xs sm:text-sm max-w-md mx-auto">Ada hal yang ingin ditanyakan seputar acara? Hubungi panitia melalui WhatsApp di bawah ini:</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md mx-auto">
-                <!-- CP 1: Kak Rafa -->
-                <a href="https://wa.me/6281228323895" target="_blank" class="flex items-center justify-center gap-3 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 p-3.5 rounded-xl transition duration-300 text-white group hover:border-emerald-500/50">
-                    <i class="fa-brands fa-whatsapp text-emerald-400 text-xl group-hover:scale-110 transition"></i>
-                    <div class="text-left">
-                        <p class="text-[10px] text-slate-400 font-semibold uppercase">Narahubung 1</p>
-                        <p class="font-bold text-xs text-white">Kak Rafa</p>
-                    </div>
-                </a>
-                <!-- CP 2: Kak Cevin -->
-                <a href="https://wa.me/6288991821000" target="_blank" class="flex items-center justify-center gap-3 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 p-3.5 rounded-xl transition duration-300 text-white group hover:border-emerald-500/50">
-                    <i class="fa-brands fa-whatsapp text-emerald-400 text-xl group-hover:scale-110 transition"></i>
-                    <div class="text-left">
-                        <p class="text-[10px] text-slate-400 font-semibold uppercase">Narahubung 2</p>
-                        <p class="font-bold text-xs text-white">Kak Cevin</p>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER DENGAN LINK MENU ADMIN DI BAWAH DEWE -->
-    <footer class="text-center py-6 text-xs text-slate-500 border-t border-white/5 relative z-10 bg-slate-950/40 space-y-2">
-        <div class="max-w-5xl mx-auto space-y-1 px-4">
-            <p class="font-medium text-slate-400">Ambalan PRAMYOSMAR • Pangkalan SMK KAL 1 Surabaya</p>
-            <p>&copy; 2026 Panitia Pelaksana HUT ke-40. All Rights Reserved.</p>
-        </div>
-        <div class="pt-2">
-            <a href="admin.html" class="inline-flex items-center gap-1.5 text-[11px] text-amber-500/80 hover:text-amber-400 transition bg-slate-900/60 px-3 py-1 rounded-full border border-slate-800">
-                <i class="fa-solid fa-lock text-[10px]"></i> Portal Panitia / Admin Absensi
+            <!-- Menu 4: Galeri Kenangan -->
+            <a href="kenangan.html" class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 hover:border-blue-500/50 transition duration-300 group text-left block">
+                <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-images text-base"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-white text-xs">Galeri Kenangan</h3>
+                    <p class="text-[10px] text-slate-400 leading-tight">Arsip foto & memori 4 dekade.</p>
+                </div>
             </a>
         </div>
+
+        <!-- NARAHUBUNG PANITIA QUICK INFO -->
+        <div class="glass-card p-4 rounded-2xl flex items-center justify-between border border-slate-800">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-sm">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white text-xs">Narahubung Merchandise</h4>
+                    <p class="text-[10px] text-amber-400 font-semibold">Kak Zazkia (+62 831-1532-6021)</p>
+                </div>
+            </div>
+            <a href="https://wa.me/6283115326021?text=Halo%20Kak%20Zazkia,%20saya%20ingin%20tanya%20seputar%20Pre-Order%20Merchandise%20HUT%20ke-40%20Pramyosmar." target="_blank" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl transition font-semibold">
+                Chat
+            </a>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-3 text-[10px] text-slate-500 border-t border-white/5 bg-slate-950/60 mt-4">
+        <p>&copy; 2026 Panitia Pelaksana HUT ke-40 PRAMYOSMAR SMK KAL 1 Surabaya</p>
     </footer>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        function getDatabase() {
-            return JSON.parse(localStorage.getItem('pramyosmar_rsvp')) || [];
-        }
-
-        function saveDatabase(data) {
-            localStorage.setItem('pramyosmar_rsvp', JSON.stringify(data));
-        }
-
-        const rsvpForm = document.getElementById('rsvpForm');
-        const resultCard = document.getElementById('resultCard');
-        const qrContainer = document.getElementById('qrContainer');
-        const absensiMessage = document.getElementById('absensiMessage');
-        const qrImage = document.getElementById('qrImage');
-        const resNama = document.getElementById('resNama');
-        const resAngkatan = document.getElementById('resAngkatan');
-        const resStatus = document.getElementById('resStatus');
-        const downloadQrBtn = document.getElementById('downloadQrBtn');
-
-        let currentQrUrl = '';
-
-        rsvpForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const nama = document.getElementById('nama').value.trim();
-            const angkatan = document.getElementById('angkatan').value.trim();
-            const status = document.getElementById('status').value;
-
-            resNama.textContent = nama;
-            resAngkatan.textContent = angkatan;
-            resStatus.textContent = status;
-            resultCard.classList.remove('hidden');
-
-            let db = getDatabase();
-            let existing = db.find(item => item.nama.toLowerCase() === nama.toLowerCase());
-            if (!existing) {
-                db.push({
-                    nama: nama,
-                    angkatan: angkatan,
-                    status: status,
-                    checkedIn: false,
-                    checkInTime: '-'
-                });
-            } else {
-                existing.status = status;
-            }
-            saveDatabase(db);
-
-            if (status === 'Hadir') {
-                qrContainer.classList.remove('hidden');
-                absensiMessage.innerHTML = '';
-                const qrDataString = `PRAMYOSMAR40|${nama}|${angkatan}`;
-                const qrData = encodeURIComponent(qrDataString);
-                currentQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrData}`;
-                qrImage.src = currentQrUrl;
-            } else {
-                qrContainer.classList.add('hidden');
-                absensiMessage.innerHTML = `
-                    <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl text-center space-y-2 max-w-xs mx-auto shadow-xl">
-                        <i class="fa-regular fa-envelope-open text-amber-400 text-xl mb-1"></i>
-                        <p class="font-bold text-white text-sm">Terima kasih atas konfirmasinya, Kak ${nama}.</p>
-                        <p class="text-xs text-slate-400">Meskipun berhalangan hadir, konfirmasi Anda telah tercatat. Doa dan dukungan Anda sangat berarti untuk kesuksesan HUT ke-40 PRAMYOSMAR.</p>
-                    </div>
-                `;
-            }
-            resultCard.scrollIntoView({ behavior: 'smooth' });
-        });
-
-        downloadQrBtn.addEventListener('click', function() {
-            if (!currentQrUrl) return;
-            const namaVal = document.getElementById('nama').value.replace(/\s+/g, '-');
-            fetch(currentQrUrl)
-                .then(response => response.blob())
-                .then(blob => {
-                    const blobUrl = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = blobUrl;
-                    a.download = `QR-Absensi-Pramyosmar-${namaVal}.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(blobUrl);
-                })
-                .catch(() => { window.open(currentQrUrl, '_blank'); });
-        });
-    </script>
 </body>
 </html>
+
