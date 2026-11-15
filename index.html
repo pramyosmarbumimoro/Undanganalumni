@@ -18,6 +18,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            overflow-x: hidden;
         }
         .glass-card {
             background: rgba(20, 15, 15, 0.85);
@@ -40,37 +41,37 @@
         }
     </style>
 </head>
-<body class="bg-mesh p-4 selection:bg-red-600 selection:text-white">
+<body class="bg-mesh p-3 sm:p-4 selection:bg-red-600 selection:text-white pb-20">
 
-    <div class="max-w-md mx-auto w-full space-y-4 py-3">
+    <div class="max-w-md mx-auto w-full space-y-3.5">
         
         <!-- HEADER LOGO & INTRO -->
-        <div class="glass-card p-5 rounded-3xl text-center space-y-3 glow-red-yellow border border-red-500/20">
+        <div class="glass-card p-4 sm:p-5 rounded-3xl text-center space-y-3 glow-red-yellow border border-red-500/20">
             <div class="w-20 h-20 mx-auto rounded-2xl bg-slate-900 border border-slate-700/60 overflow-hidden shadow-lg flex items-center justify-center p-1">
                 <img src="1000568995.jpg" alt="Logo Pramyosmar" class="w-full h-full object-cover rounded-xl">
             </div>
             <div class="space-y-1">
                 <span class="bg-red-500/10 text-red-400 border border-red-500/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Reuni Akbar 4 Dekade</span>
                 <h1 class="text-xl font-extrabold text-white pt-1">HUT ke-40 PRAMYOSMAR</h1>
-                <p class="text-xs text-amber-400 font-semibold">"Menjemput Jejak Langkah, Menyalakan Kembali Api Ambalan"</p>
+                <p class="text-xs text-amber-400 font-semibold leading-relaxed">"Menjemput Jejak Langkah, Menyalakan Kembali Api Ambalan"</p>
             </div>
             <div class="pt-2 border-t border-white/10 flex justify-around text-center">
                 <div>
-                    <p class="text-[10px] text-slate-400 uppercase font-semibold">Tanggal</p>
+                    <p class="text-[9px] text-slate-400 uppercase font-semibold">Tanggal</p>
                     <p class="text-xs font-bold text-white">12 Desember 2026</p>
                 </div>
                 <div class="border-r border-white/10"></div>
                 <div>
-                    <p class="text-[10px] text-slate-400 uppercase font-semibold">Lokasi</p>
+                    <p class="text-[9px] text-slate-400 uppercase font-semibold">Lokasi</p>
                     <p class="text-xs font-bold text-white">SMK KAL 1 Surabaya</p>
                 </div>
             </div>
         </div>
 
         <!-- TOMBOL UTAMA: SURAT UNDANGAN RESMI (GOOGLE DRIVE) -->
-        <a href="https://drive.google.com/drive/folders/1X_o-rVsGUQITc5AOx_BZz351IHRrXUKq" target="_blank" class="glass-card p-4 rounded-2xl flex items-center justify-between border border-amber-500/40 hover:border-amber-400 transition duration-300 group block">
+        <a href="https://drive.google.com/drive/folders/1X_o-rVsGUQITc5AOx_BZz351IHRrXUKq" target="_blank" class="glass-card p-3.5 rounded-2xl flex items-center justify-between border border-amber-500/40 hover:border-amber-400 transition duration-300 group block">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-lg group-hover:scale-110 transition">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 text-base group-hover:scale-110 transition">
                     <i class="fa-brands fa-google-drive"></i>
                 </div>
                 <div>
@@ -78,7 +79,7 @@
                     <p class="text-[10px] text-slate-300">Buka arsip surat undangan di Google Drive.</p>
                 </div>
             </div>
-            <span class="text-xs bg-gradient-to-r from-amber-600 to-yellow-500 text-slate-950 font-bold px-3 py-2 rounded-xl shadow">
+            <span class="text-[11px] bg-gradient-to-r from-amber-600 to-yellow-500 text-slate-950 font-bold px-3 py-2 rounded-xl shadow">
                 Buka <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[9px]"></i>
             </span>
         </a>
@@ -86,66 +87,98 @@
         <!-- APP-STYLE MENU GRID (2x2) -->
         <div class="grid grid-cols-2 gap-3">
             <!-- Menu 1: Registrasi / E-Tiket -->
-            <a href="reg.html" class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 hover:border-red-500/50 transition duration-300 group text-left block">
-                <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400 group-hover:scale-110 transition">
-                    <i class="fa-solid fa-ticket text-base"></i>
+            <a href="reg.html" class="glass-card p-3.5 rounded-2xl space-y-2 border border-slate-800 hover:border-red-500/50 transition duration-300 group text-left block">
+                <div class="w-9 h-9 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-ticket text-sm"></i>
                 </div>
                 <div>
                     <h3 class="font-bold text-white text-xs">Registrasi & RSVP</h3>
-                    <p class="text-[10px] text-slate-400 leading-tight">Ambil E-Tiket QR Code kehadiranmu.</p>
+                    <p class="text-[10px] text-slate-400 leading-tight">Ambil E-Tiket QR Code.</p>
                 </div>
             </a>
 
             <!-- Menu 2: Buku Ucapan -->
-            <a href="ucapan.html" class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 hover:border-emerald-500/50 transition duration-300 group text-left block">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition">
-                    <i class="fa-solid fa-comments text-base"></i>
+            <a href="ucapan.html" class="glass-card p-3.5 rounded-2xl space-y-2 border border-slate-800 hover:border-emerald-500/50 transition duration-300 group text-left block">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-comments text-sm"></i>
                 </div>
                 <div>
                     <h3 class="font-bold text-white text-xs">Buku Ucapan</h3>
-                    <p class="text-[10px] text-slate-400 leading-tight">Kirim doa & pesan lintas alumni.</p>
+                    <p class="text-[10px] text-slate-400 leading-tight">Kirim doa & pesan alumni.</p>
                 </div>
             </a>
 
             <!-- Menu 3: Merchandise -->
-            <a href="merch.html" class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 hover:border-amber-500/50 transition duration-300 group text-left block">
-                <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 group-hover:scale-110 transition">
-                    <i class="fa-solid fa-shirt text-base"></i>
+            <a href="merch.html" class="glass-card p-3.5 rounded-2xl space-y-2 border border-slate-800 hover:border-amber-500/50 transition duration-300 group text-left block">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-shirt text-sm"></i>
                 </div>
                 <div>
                     <h3 class="font-bold text-white text-xs">Merchandise</h3>
-                    <p class="text-[10px] text-slate-400 leading-tight">Pre-Order atribut resmi (PO s.d 28 Nov).</p>
+                    <p class="text-[10px] text-slate-400 leading-tight">Pre-Order atribut resmi.</p>
                 </div>
             </a>
 
             <!-- Menu 4: Galeri Kenangan -->
-            <a href="kenangan.html" class="glass-card p-4 rounded-2xl space-y-2 border border-slate-800 hover:border-blue-500/50 transition duration-300 group text-left block">
-                <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition">
-                    <i class="fa-solid fa-images text-base"></i>
+            <a href="kenangan.html" class="glass-card p-3.5 rounded-2xl space-y-2 border border-slate-800 hover:border-blue-500/50 transition duration-300 group text-left block">
+                <div class="w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-images text-sm"></i>
                 </div>
                 <div>
                     <h3 class="font-bold text-white text-xs">Galeri Kenangan</h3>
-                    <p class="text-[10px] text-slate-400 leading-tight">Arsip foto & memori 4 dekade.</p>
+                    <p class="text-[10px] text-slate-400 leading-tight">Arsip foto 4 dekade.</p>
                 </div>
             </a>
         </div>
 
-        <!-- NARAHUBUNG PANITIA QUICK INFO -->
-        <div class="glass-card p-4 rounded-2xl flex items-center justify-between border border-slate-800">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-sm">
-                    <i class="fa-brands fa-whatsapp"></i>
+        <!-- MENU ADMIN SHORTCUT -->
+        <a href="admin.html" class="glass-card p-3 rounded-2xl flex items-center justify-between border border-slate-800 hover:border-purple-500/40 transition block">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 text-xs">
+                    <i class="fa-solid fa-lock"></i>
                 </div>
                 <div>
-                    <h4 class="font-bold text-white text-xs">Narahubung Merchandise</h4>
-                    <p class="text-[10px] text-amber-400 font-semibold">Kak Zazkia (+62 831-1532-6021)</p>
+                    <h4 class="font-bold text-white text-xs">Portal Admin Panitia</h4>
+                    <p class="text-[9px] text-slate-400">Rekap data & scan QR tiket (PIN: 4040)</p>
                 </div>
             </div>
-            <a href="https://wa.me/6283115326021?text=Halo%20Kak%20Zazkia,%20saya%20ingin%20tanya%20seputar%20Pre-Order%20Merchandise%20HUT%20ke-40%20Pramyosmar." target="_blank" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl transition font-semibold">
-                Chat
-            </a>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-500 pr-2"></i>
+        </a>
+
+        <!-- NARAHUBUNG PANITIA QUICK INFO (KAK RAFA & KAK CEVIN) -->
+        <div class="glass-card p-3.5 rounded-2xl space-y-2.5 border border-slate-800">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xs">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-xs">Narahubung Panitia</h4>
+                        <p class="text-[9px] text-slate-400">Hubungi jika ada kendala acara</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+                <a href="https://wa.me/6285155353597?text=Halo%20Kak%20Rafa,%20saya%20ingin%20tanya%20seputar%20acara%20Reuni%20HUT%20Pramyosmar." target="_blank" class="bg-slate-900/90 hover:bg-slate-800 border border-slate-700/60 p-2.5 rounded-xl text-center transition block">
+                    <p class="text-[9px] text-slate-400">Narahubung 1</p>
+                    <p class="font-bold text-xs text-white">Kak Rafa</p>
+                    <span class="text-[9px] text-emerald-400 font-semibold underline mt-0.5 inline-block"><i class="fa-brands fa-whatsapp"></i> Chat WA</span>
+                </a>
+                <a href="https://wa.me/62895376510300?text=Halo%20Kak%20Cevin,%20saya%20ingin%20tanya%20seputar%20acara%20Reuni%20HUT%20Pramyosmar." target="_blank" class="bg-slate-900/90 hover:bg-slate-800 border border-slate-700/60 p-2.5 rounded-xl text-center transition block">
+                    <p class="text-[9px] text-slate-400">Narahubung 2</p>
+                    <p class="font-bold text-xs text-white">Kak Cevin</p>
+                    <span class="text-[9px] text-emerald-400 font-semibold underline mt-0.5 inline-block"><i class="fa-brands fa-whatsapp"></i> Chat WA</span>
+                </a>
+            </div>
         </div>
 
+    </div>
+
+    <!-- FLOATING WHATSAPP CHAT BUTTON (KAK RAFA) -->
+    <div class="fixed bottom-4 right-4 z-50">
+        <a href="https://wa.me/6285155353597?text=Halo%20Kak%20Rafa,%20saya%20ingin%20bertanya%20tentang%20Reuni%20HUT%20ke-40%20Pramyosmar." target="_blank" class="w-12 h-12 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-lg shadow-emerald-900/50 transition-all duration-300 hover:scale-110">
+            <i class="fa-brands fa-whatsapp text-2xl"></i>
+        </a>
     </div>
 
     <!-- FOOTER -->
