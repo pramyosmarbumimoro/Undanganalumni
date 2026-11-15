@@ -107,9 +107,9 @@
         <p>&copy; 2026 Panitia Pelaksana HUT ke-40 PRAMYOSMAR SMK KAL 1 Surabaya</p>
     </footer>
 
-    <!-- SCRIPT SUPABASE INTEGRATION -->
+    <!-- SCRIPT SUPABASE INTEGRATION (DISESUAIKAN HURUF KAPITAL) -->
     <script>
-        const SUPABASE_URL = 'https://dilfnlqbfyvdgunqhixr.supabase.co';[span_0](start_span)[span_0](end_span)
+        const SUPABASE_URL = 'https://dilfnlqbfyvdgunqhixr.supabase.co';
         const SUPABASE_ANON_KEY = 'Sb_publishable_U2hNCCl3VcpT1MXnpunCDg_RHX6kNHR';
         
         const { createClient } = supabase;
@@ -120,10 +120,10 @@
         const ucapanForm = document.getElementById('ucapanForm');
         const submitBtn = document.getElementById('submitBtn');
 
-        // Fungsi Ambil Data dari Supabase
+        // Fungsi Ambil Data dari Supabase (Tabel: Ucapan)
         async function fetchUcapan() {
             const { data, error } = await _supabase
-                .from('ucapan')
+                .from('Ucapan')
                 .select('*')
                 .order('id', { ascending: false });
 
@@ -144,28 +144,35 @@
 
             data.forEach(item => {
                 let tanggal = '-';
-                if (item.created_at) {
-                    const d = new Date(item.created_at);
+                // Menyesuaikan huruf kapital pada kolom database (item.Created_at atau item.created_at)
+                const timestamp = item.created_at || item.Created_at;
+                if (timestamp) {
+                    const d = new Date(timestamp);
                     tanggal = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
                 }
+
+                // Menyesuaikan kolom Nama, Angkatan, Pesan
+                const namaVal = item.Nama || item.nama || 'Tanpa Nama';
+                const angkatanVal = item.Angkatan || item.angkatan || '-';
+                const pesanVal = item.Pesan || item.pesan || '-';
 
                 let div = document.createElement('div');
                 div.className = "glass-card p-4 rounded-xl space-y-2 border border-slate-800";
                 div.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
-                            <h4 class="font-bold text-white text-xs">${item.nama}</h4>
-                            <p class="text-[10px] text-amber-400">${item.angkatan}</p>
+                            <h4 class="font-bold text-white text-xs">${namaVal}</h4>
+                            <p class="text-[10px] text-amber-400">${angkatanVal}</p>
                         </div>
                         <span class="text-[9px] text-slate-500">${tanggal}</span>
                     </div>
-                    <p class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80">${item.pesan}</p>
+                    <p class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80">${pesanVal}</p>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // Fungsi Kirim Data ke Supabase
+        // Fungsi Kirim Data ke Supabase (Kolom: Nama, Angkatan, Pesan)
         ucapanForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const nama = document.getElementById('ucapNama').value.trim();
@@ -176,8 +183,8 @@
             submitBtn.textContent = 'Mengirim...';
 
             const { error } = await _supabase
-                .from('ucapan')
-                .insert([{ nama: nama, angkatan: angkatan, pesan: pesan }]);
+                .from('Ucapan')
+                .insert([{ Nama: nama, Angkatan: angkatan, Pesan: pesan }]);
 
             if (error) {
                 alert('Gagal mengirim ucapan: ' + error.message);
@@ -194,10 +201,10 @@
             alert("Terima kasih! Pesan dan doa Anda berhasil dikirim ke server dan langsung tampil.");
         });
 
-        // Realtime Subscription (Supaya otomatis update tanpa refresh)
+        // Realtime Subscription (Tabel: Ucapan)
         _supabase
-            .channel('public:ucapan')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'ucapan' }, payload => {
+            .channel('public:Ucapan')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'Ucapan' }, payload => {
                 fetchUcapan();
             })
             .subscribe();
@@ -206,5 +213,4 @@
         fetchUcapan();
     </script>
 </body>
-                      </html>
-                      
+</html>
