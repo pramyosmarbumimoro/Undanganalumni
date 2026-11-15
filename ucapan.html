@@ -120,10 +120,10 @@
         const ucapanForm = document.getElementById('ucapanForm');
         const submitBtn = document.getElementById('submitBtn');
 
-        // Fungsi Ambil Data dari Supabase (Tabel: Ucapan, Kolom huruf kecil)
+        // Fungsi Ambil Data dari Supabase (Tabel: ucapan huruf kecil)
         async function fetchUcapan() {
             const { data, error } = await _supabase
-                .from('Ucapan')
+                .from('ucapan')
                 .select('*')
                 .order('id', { ascending: false });
 
@@ -144,33 +144,28 @@
 
             data.forEach(item => {
                 let tanggal = '-';
-                const timestamp = item.created_at || item.Created_at;
-                if (timestamp) {
-                    const d = new Date(timestamp);
+                if (item.created_at) {
+                    const d = new Date(item.created_at);
                     tanggal = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
                 }
-
-                const namaVal = item.nama || item.Nama || 'Tanpa Nama';
-                const angkatanVal = item.angkatan || item.Angkatan || '-';
-                const pesanVal = item.pesan || item.Pesan || '-';
 
                 let div = document.createElement('div');
                 div.className = "glass-card p-4 rounded-xl space-y-2 border border-slate-800";
                 div.innerHTML = `
                     <div class="flex justify-between items-start">
                         <div>
-                            <h4 class="font-bold text-white text-xs">${namaVal}</h4>
-                            <p class="text-[10px] text-amber-400">${angkatanVal}</p>
+                            <h4 class="font-bold text-white text-xs">${item.nama}</h4>
+                            <p class="text-[10px] text-amber-400">${item.angkatan}</p>
                         </div>
                         <span class="text-[9px] text-slate-500">${tanggal}</span>
                     </div>
-                    <p class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80">${pesanVal}</p>
+                    <p class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80">${item.pesan}</p>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // Fungsi Kirim Data ke Supabase (Kolom lowercase: nama, angkatan, pesan)
+        // Fungsi Kirim Data ke Supabase
         ucapanForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const nama = document.getElementById('ucapNama').value.trim();
@@ -181,7 +176,7 @@
             submitBtn.textContent = 'Mengirim...';
 
             const { error } = await _supabase
-                .from('Ucapan')
+                .from('ucapan')
                 .insert([{ nama: nama, angkatan: angkatan, pesan: pesan }]);
 
             if (error) {
@@ -201,8 +196,8 @@
 
         // Realtime Subscription
         _supabase
-            .channel('public:Ucapan')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'Ucapan' }, payload => {
+            .channel('public:ucapan')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'ucapan' }, payload => {
                 fetchUcapan();
             })
             .subscribe();
