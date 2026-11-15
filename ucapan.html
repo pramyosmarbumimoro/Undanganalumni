@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Buku Ucapan & Doa - HUT ke-40 PRAMYOSMAR</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #070505;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .glass-card {
+            background: rgba(20, 15, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glow-red-yellow {
+            box-shadow: 0 0 25px rgba(225, 29, 72, 0.15), 0 0 50px rgba(245, 158, 11, 0.1);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #fb7185 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-mesh {
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(225, 29, 72, 0.15) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(245, 158, 11, 0.15) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-mesh p-4 selection:bg-red-600 selection:text-white">
+
+    <div class="max-w-md mx-auto w-full space-y-4 py-2">
+        <!-- TOP NAVIGATION -->
+        <div class="flex justify-between items-center bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <div>
+                    <h1 class="text-xs font-bold text-white">Buku Ucapan & Doa</h1>
+                    <p class="text-[9px] text-slate-400">HUT ke-40 PRAMYOSMAR</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl transition flex items-center gap-1.5">
+                <i class="fa-solid fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+
+        <!-- FORM KIRIM UCAPAN -->
+        <div class="glass-card p-5 rounded-2xl space-y-3.5 glow-red-yellow">
+            <div class="text-center space-y-1">
+                <h2 class="text-base font-bold text-white">Tulis Pesan & Kesan</h2>
+                <p class="text-[11px] text-slate-400">Sampaikan doa terbaik untuk ambalan tercinta kita (Sinkron Online).</p>
+            </div>
+
+            <form id="ucapanForm" class="space-y-3">
+                <div class="space-y-1">
+                    <label class="block text-[11px] font-semibold text-slate-300">Nama Lengkap & Gelar</label>
+                    <input type="text" id="ucapNama" required class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500 transition" placeholder="Contoh: Siti Aminah, S.Pd.">
+                </div>
+                <div class="space-y-1">
+                    <label class="block text-[11px] font-semibold text-slate-300">Angkatan / Tahun Lulus</label>
+                    <input type="text" id="ucapAngkatan" required class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500 transition" placeholder="Contoh: Angkatan 2018">
+                </div>
+                <div class="space-y-1">
+                    <label class="block text-[11px] font-semibold text-slate-300">Pesan, Kesan & Doa</label>
+                    <textarea id="ucapPesan" rows="3" required class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500 transition resize-none" placeholder="Tuliskan pesan dan doa untuk HUT ke-40 Pramyosmar..."></textarea>
+                </div>
+                <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-xs py-3 rounded-xl transition duration-300 shadow-lg shadow-emerald-900/30">
+                    Kirim Ucapan & Doa
+                </button>
+            </form>
+        </div>
+
+        <!-- WALL OF WISHES (DINDING UCAPAN ALUMNI) -->
+        <div class="space-y-3 pt-2">
+            <div class="flex justify-between items-center px-1">
+                <h3 class="text-xs font-bold text-amber-400 uppercase tracking-wider"><i class="fa-solid fa-book-open mr-1"></i> Dinding Ucapan Alumni</h3>
+                <span id="totalUcapanBadge" class="bg-slate-900 text-slate-400 border border-slate-800 text-[10px] px-2.5 py-0.5 rounded-full font-bold">Memuat...</span>
+            </div>
+
+            <!-- List Card Ucapan -->
+            <div id="ucapanContainer" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+                <p class="text-center text-xs text-slate-500 py-4">Memuat pesan dari database...</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-3 text-[10px] text-slate-500 border-t border-white/5 bg-slate-950/60 mt-4">
+        <p>&copy; 2026 Panitia Pelaksana HUT ke-40 PRAMYOSMAR SMK KAL 1 Surabaya</p>
+    </footer>
+
+    <!-- SCRIPT SUPABASE INTEGRATION -->
+    <script>
+        const SUPABASE_URL = 'https://dilfnlqbfyvdgunqhixr.supabase.co';[span_0](start_span)[span_0](end_span)
+        const SUPABASE_ANON_KEY = 'Sb_publishable_U2hNCCl3VcpT1MXnpunCDg_RHX6kNHR';
+        
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const container = document.getElementById('ucapanContainer');
+        const badge = document.getElementById('totalUcapanBadge');
+        const ucapanForm = document.getElementById('ucapanForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Fungsi Ambil Data dari Supabase
+        async function fetchUcapan() {
+            const { data, error } = await _supabase
+                .from('ucapan')
+                .select('*')
+                .order('id', { ascending: false });
+
+            if (error) {
+                console.error('Gagal memuat ucapan:', error);
+                container.innerHTML = `<p class="text-center text-xs text-red-400 py-4">Gagal memuat pesan dari server.</p>`;
+                badge.textContent = `0 Pesan`;
+                return;
+            }
+
+            badge.textContent = `${data.length} Pesan`;
+            container.innerHTML = '';
+
+            if (data.length === 0) {
+                container.innerHTML = `<p class="text-center text-xs text-slate-500 py-4">Belum ada ucapan. Jadilah yang pertama mengirimkan!</p>`;
+                return;
+            }
+
+            data.forEach(item => {
+                let tanggal = '-';
+                if (item.created_at) {
+                    const d = new Date(item.created_at);
+                    tanggal = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+                }
+
+                let div = document.createElement('div');
+                div.className = "glass-card p-4 rounded-xl space-y-2 border border-slate-800";
+                div.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-white text-xs">${item.nama}</h4>
+                            <p class="text-[10px] text-amber-400">${item.angkatan}</p>
+                        </div>
+                        <span class="text-[9px] text-slate-500">${tanggal}</span>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/80">${item.pesan}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Fungsi Kirim Data ke Supabase
+        ucapanForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const nama = document.getElementById('ucapNama').value.trim();
+            const angkatan = document.getElementById('ucapAngkatan').value.trim();
+            const pesan = document.getElementById('ucapPesan').value.trim();
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Mengirim...';
+
+            const { error } = await _supabase
+                .from('ucapan')
+                .insert([{ nama: nama, angkatan: angkatan, pesan: pesan }]);
+
+            if (error) {
+                alert('Gagal mengirim ucapan: ' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Kirim Ucapan & Doa';
+                return;
+            }
+
+            ucapanForm.reset();
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Kirim Ucapan & Doa';
+            
+            fetchUcapan();
+            alert("Terima kasih! Pesan dan doa Anda berhasil dikirim ke server dan langsung tampil.");
+        });
+
+        // Realtime Subscription (Supaya otomatis update tanpa refresh)
+        _supabase
+            .channel('public:ucapan')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'ucapan' }, payload => {
+                fetchUcapan();
+            })
+            .subscribe();
+
+        // Jalankan saat halaman dibuka
+        fetchUcapan();
+    </script>
+</body>
+                      </html>
+                      
