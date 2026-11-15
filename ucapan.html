@@ -107,10 +107,10 @@
         <p>&copy; 2026 Panitia Pelaksana HUT ke-40 PRAMYOSMAR SMK KAL 1 Surabaya</p>
     </footer>
 
-    <!-- SCRIPT SUPABASE INTEGRATION (DISESUAIKAN HURUF KAPITAL) -->
+    <!-- SCRIPT SUPABASE INTEGRATION -->
     <script>
         const SUPABASE_URL = 'https://dilfnlqbfyvdgunqhixr.supabase.co';
-        const SUPABASE_ANON_KEY = 'Sb_publishable_U2hNCCl3VcpT1MXnpunCDg_RHX6kNHR';
+        const SUPABASE_ANON_KEY = 'sb_publishable_U2hNCCl3VcpT1MXnpunCDg_RHX6kNHR';
         
         const { createClient } = supabase;
         const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -144,14 +144,12 @@
 
             data.forEach(item => {
                 let tanggal = '-';
-                // Menyesuaikan huruf kapital pada kolom database (item.Created_at atau item.created_at)
                 const timestamp = item.created_at || item.Created_at;
                 if (timestamp) {
                     const d = new Date(timestamp);
                     tanggal = d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
                 }
 
-                // Menyesuaikan kolom Nama, Angkatan, Pesan
                 const namaVal = item.Nama || item.nama || 'Tanpa Nama';
                 const angkatanVal = item.Angkatan || item.angkatan || '-';
                 const pesanVal = item.Pesan || item.pesan || '-';
@@ -172,7 +170,7 @@
             });
         }
 
-        // Fungsi Kirim Data ke Supabase (Kolom: Nama, Angkatan, Pesan)
+        // Fungsi Kirim Data ke Supabase
         ucapanForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const nama = document.getElementById('ucapNama').value.trim();
@@ -201,7 +199,7 @@
             alert("Terima kasih! Pesan dan doa Anda berhasil dikirim ke server dan langsung tampil.");
         });
 
-        // Realtime Subscription (Tabel: Ucapan)
+        // Realtime Subscription
         _supabase
             .channel('public:Ucapan')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'Ucapan' }, payload => {
