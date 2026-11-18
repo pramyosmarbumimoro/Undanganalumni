@@ -80,13 +80,18 @@
             <div class="glass-card p-4 rounded-2xl space-y-3 border border-slate-800">
                 <div class="flex justify-between items-center">
                     <h3 class="font-bold text-white text-xs"><i class="fa-solid fa-qrcode mr-1.5 text-amber-400"></i> Scan QR Tiket Tamu</h3>
-                    <button onclick="startScanner()" class="text-[10px] bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1.5 rounded-lg font-semibold">
-                        <i class="fa-solid fa-camera mr-1"></i> Buka Kamera
-                    </button>
+                    <div class="flex gap-1.5">
+                        <button onclick="startScanner()" class="text-[10px] bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1.5 rounded-lg font-semibold">
+                            <i class="fa-solid fa-camera mr-1"></i> Buka Kamera
+                        </button>
+                        <button onclick="stopScanner()" class="text-[10px] bg-red-600/80 hover:bg-red-600 text-white px-2.5 py-1.5 rounded-lg font-semibold">
+                            <i class="fa-solid fa-stop mr-1"></i> Tutup
+                        </button>
+                    </div>
                 </div>
                 <div id="reader" class="w-full overflow-hidden rounded-xl bg-slate-950 border border-slate-800"></div>
                 <div id="scanResult" class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs text-center text-slate-400">
-                    Arahkan kamera ke QR Code tamu atau klik Buka Kamera.
+                    Kamera siap. Klik "Buka Kamera" untuk mulai memindai berulang kali.
                 </div>
             </div>
 
@@ -112,7 +117,7 @@
         <p>&copy; 2026 Panitia Pelaksana HUT ke-40 PRAMYOSMAR SMK KAL 1 Surabaya</p>
     </footer>
 
-    <!-- SCRIPT ADMIN & SCANNER -->
+    <!-- SCRIPT ADMIN & SCANNER KONTINYU -->
     <script>
         const SUPABASE_URL = 'https://dilfnlqbfyvdgunqhixr.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_U2hNCCl3VcpT1MXnpunCDg_RHX6kNHR';
@@ -128,40 +133,63 @@
                 document.getElementById('loginBox').classList.add('hidden');
                 document.getElementById('adminDashboard').classList.remove('hidden');
                 fetchTamuList();
+                startScanner(); // Otomatis buka kamera pas login sukses biar gampang
             } else {
                 alert('PIN Salah! Gunakan PIN: 4040');
             }
         });
 
         let html5QrCode = null;
+        let isScanning = false;
 
-        // Buka Kamera Scanner
-        function startScanner() {
+        // Buka Kamera Scanner (Bisa Scan Terus-menerus Tanpa Mati)
+        async function startScanner() {
             const resultBox = document.getElementById('scanResult');
-            if (html5QrCode) {
-                html5QrCode.stop().catch(() => {});
+            
+            if (!html5QrCode) {
+                html5QrCode = new Html5Qrcode("reader");
             }
 
-            html5QrCode = new Html5Qrcode("reader");
-            html5QrCode.start(
-                { facingMode: "environment" },
-                { fps: 10, qrbox: { width: 200, height: 200 } },
-                async (decodedText) => {
-                    const parts = decodedText.split('|');
-                    const ticketId = parts[0];
+            if (isScanning) return; // Lek lagi scan, jarno wae
 
-                    resultBox.innerHTML = `<span class="text-amber-400 font-bold">QR Terbaca: ${decodedText}</span>`;
-                    
-                    await markAsHadir(ticketId);
+            try {
+                await html5QrCode.start(
+                    { facingMode: "environment" },
+                    { fps: 15, qrbox: { width: 220, height: 220 } },
+                    async (decodedText) => {
+                        // Pecah string QR format: TICKET_ID|NAMA|ANGKATAN
+                        const parts = decodedText.split('|');
+                        const ticketId = parts[0];
 
-                    html5QrCode.stop().catch(() => {});
-                },
-                (errorMessage) => {
-                    // Scanning error ignore for smooth performance
+                        if (!ticketId) return;
+
+                        // Tandai hadir ke database secara permanen
+                        await markAsHadir(ticketId);
+                    },
+                    (errorMessage) => {
+                        // Abaikan error frame kecil supaya kamera gak lag
+                    }
+                );
+                isScanning = true;
+                resultBox.innerHTML = `<span class="text-emerald-400 font-semibold"><i class="fa-solid fa-video mr-1"></i> Kamera aktif. Silakan arahkan ke QR Code tamu berikutnya...</span>`;
+            } catch (err) {
+                resultBox.innerHTML = `<span class="text-red-400 font-bold">Gagal membuka kamera: ${err}</span>`;
+                isScanning = false;
+            }
+        }
+
+        // Tutup Kamera Manual
+        async function stopScanner() {
+            const resultBox = document.getElementById('scanResult');
+            if (html5QrCode && isScanning) {
+                try {
+                    await html5QrCode.stop();
+                    isScanning = false;
+                    resultBox.innerHTML = `<span class="text-amber-400">Kamera ditutup. Klik "Buka Kamera" untuk melanjutkan scan.</span>`;
+                } catch (err) {
+                    console.error("Gagal stop scanner:", err);
                 }
-            ).catch(err => {
-                resultBox.innerHTML = `<span class="text-red-400">Gagal membuka kamera: ${err}</span>`;
-            });
+            }
         }
 
         // Fungsi Ambil Daftar Tamu dari Supabase
@@ -220,7 +248,7 @@
             });
         }
 
-        // Tandai Hadir otomatis via QR (Permanen kesimpen)
+        // Tandai Hadir otomatis via QR (Kamera TIDAK MATI, bisa lanjut scan tamu lain)
         async function markAsHadir(ticketId) {
             const { data, error } = await _supabase
                 .from('registrasi')
@@ -232,10 +260,10 @@
             if (error) {
                 resultBox.innerHTML = `<span class="text-red-400 font-bold">Gagal simpan: ${error.message}</span>`;
             } else if (!data || data.length === 0) {
-                resultBox.innerHTML = `<span class="text-red-400 font-bold">Tiket tidak ditemukan di database!</span>`;
+                resultBox.innerHTML = `<span class="text-red-400 font-bold">Tiket ID [${ticketId}] tidak ditemukan di database!</span>`;
             } else {
-                resultBox.innerHTML = `<span class="text-emerald-400 font-bold">Sukses! ${data[0].nama} tercatat HADIR (Tersimpan Permanen).</span>`;
-                fetchTamuList();
+                resultBox.innerHTML = `<span class="text-emerald-400 font-bold text-sm bg-emerald-950/50 p-2 block rounded border border-emerald-500/30">✅ Sukses! ${data[0].nama} (${data[0].angkatan}) Tercatat HADIR! Lanjut scan berikutnya...</span>`;
+                fetchTamuList(); // Update list otomatis tanpa nutup kamera
             }
         }
 
@@ -253,7 +281,7 @@
             }
         }
 
-        // Fungsi Hapus Data Tamu (Delete)
+        // Fungsi Hapus Data Tamu
         async function hapusTamu(ticketId, namaTamu) {
             if (confirm(`Yakin ingin menghapus data "${namaTamu}" dari daftar registrasi?`)) {
                 const { error } = await _supabase
