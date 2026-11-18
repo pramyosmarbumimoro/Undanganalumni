@@ -97,7 +97,7 @@
                     <span id="hadirCountBadge" class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] px-2.5 py-0.5 rounded-full font-bold">0 Hadir</span>
                 </div>
                 
-                <!-- List Tamu Container (Detail Lengkap) -->
+                <!-- List Tamu Container -->
                 <div id="tamuContainer" class="space-y-3 max-h-96 overflow-y-auto pr-1">
                     <p class="text-center text-xs text-slate-500 py-3">Memuat data tamu...</p>
                 </div>
@@ -164,7 +164,7 @@
             });
         }
 
-        // Fungsi Ambil Daftar Tamu dari Supabase (Lengkap: Nama, Angkatan, WA, Status)
+        // Fungsi Ambil Daftar Tamu dari Supabase
         async function fetchTamuList() {
             const { data, error } = await _supabase
                 .from('registrasi')
@@ -197,7 +197,12 @@
                             <h4 class="font-bold text-white text-xs">${tamu.nama}</h4>
                             <p class="text-[10px] text-amber-400 font-semibold"><i class="fa-solid fa-graduation-cap mr-1"></i>${tamu.angkatan}</p>
                         </div>
-                        <span class="text-[9px] font-mono bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">${tamu.ticket_id}</span>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[9px] font-mono bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">${tamu.ticket_id}</span>
+                            <button onclick="hapusTamu('${tamu.ticket_id}', '${tamu.nama}')" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-1 rounded transition" title="Hapus Data">
+                                <i class="fa-solid fa-trash-can text-[10px]"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 gap-1 text-[11px] text-slate-300 bg-slate-950/60 p-2 rounded-lg border border-slate-800/80">
@@ -207,7 +212,7 @@
 
                     <div class="flex justify-end pt-1">
                         <button onclick="toggleHadir('${tamu.ticket_id}', ${!tamu.hadir})" class="w-full py-2 rounded-lg font-semibold text-xs transition flex items-center justify-center gap-1.5 ${tamu.hadir ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}">
-                            ${tamu.hadir ? '<i class="fa-solid fa-circle-check"></i> Status: Hadir' : '<i class="fa-regular fa-circle"></i> Klik untuk Tandai Hadir'}
+                            ${tamu.hadir ? '<i class="fa-solid fa-circle-check"></i> Status: Hadir (Permanen)' : '<i class="fa-regular fa-circle"></i> Klik untuk Tandai Hadir'}
                         </button>
                     </div>
                 `;
@@ -215,7 +220,7 @@
             });
         }
 
-        // Tandai Hadir otomatis via QR
+        // Tandai Hadir otomatis via QR (Permanen kesimpen)
         async function markAsHadir(ticketId) {
             const { data, error } = await _supabase
                 .from('registrasi')
@@ -224,22 +229,44 @@
                 .select();
 
             const resultBox = document.getElementById('scanResult');
-            if (error || !data || data.length === 0) {
+            if (error) {
+                resultBox.innerHTML = `<span class="text-red-400 font-bold">Gagal simpan: ${error.message}</span>`;
+            } else if (!data || data.length === 0) {
                 resultBox.innerHTML = `<span class="text-red-400 font-bold">Tiket tidak ditemukan di database!</span>`;
             } else {
-                resultBox.innerHTML = `<span class="text-emerald-400 font-bold">Berhasil! ${data[0].nama} (${data[0].angkatan}) tercatat HADIR.</span>`;
+                resultBox.innerHTML = `<span class="text-emerald-400 font-bold">Sukses! ${data[0].nama} tercatat HADIR (Tersimpan Permanen).</span>`;
                 fetchTamuList();
             }
         }
 
         // Toggle Manual Hadir / Belum
         async function toggleHadir(ticketId, statusHadir) {
-            await _supabase
+            const { error } = await _supabase
                 .from('registrasi')
                 .update({ hadir: statusHadir })
                 .eq('ticket_id', ticketId);
 
-            fetchTamuList();
+            if (error) {
+                alert('Gagal mengupdate status: ' + error.message);
+            } else {
+                fetchTamuList();
+            }
+        }
+
+        // Fungsi Hapus Data Tamu (Delete)
+        async function hapusTamu(ticketId, namaTamu) {
+            if (confirm(`Yakin ingin menghapus data "${namaTamu}" dari daftar registrasi?`)) {
+                const { error } = await _supabase
+                    .from('registrasi')
+                    .delete()
+                    .eq('ticket_id', ticketId);
+
+                if (error) {
+                    alert('Gagal menghapus data: ' + error.message);
+                } else {
+                    fetchTamuList();
+                }
+            }
         }
     </script>
 </body>
