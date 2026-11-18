@@ -8,8 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- QR Code Generator Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- QRious Library (Stabil untuk generate QR Code) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <!-- Supabase JS Client CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         body {
@@ -29,11 +31,6 @@
         }
         .glow-red-yellow {
             box-shadow: 0 0 25px rgba(225, 29, 72, 0.15), 0 0 50px rgba(245, 158, 11, 0.1);
-        }
-        .text-gradient {
-            background: linear-gradient(135deg, #fb7185 0%, #fbbf24 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         .bg-mesh {
             background-image: 
@@ -89,7 +86,7 @@
                         <option value="Berhalangan Hadir (Hanya Doa Virtual)">Berhalangan Hadir (Hanya Doa Virtual)</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-semibold text-xs py-3 rounded-xl transition duration-300 shadow-lg shadow-red-900/30">
+                <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-semibold text-xs py-3 rounded-xl transition duration-300 shadow-lg shadow-red-900/30">
                     Generate E-Tiket Kehadiran
                 </button>
             </form>
@@ -103,8 +100,10 @@
                 <p class="text-[10px] text-amber-400 font-semibold">HUT ke-40 PRAMYOSMAR</p>
             </div>
 
-            <!-- QR Code Box -->
-            <div class="bg-white p-4 rounded-xl w-36 h-36 mx-auto flex items-center justify-center shadow-inner" id="qrcode"></div>
+            <!-- QR Code Canvas Box -->
+            <div class="bg-white p-3 rounded-xl w-36 h-36 mx-auto flex items-center justify-center shadow-inner">
+                <canvas id="qrCodeCanvas"></canvas>
+            </div>
 
             <div class="space-y-2 bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 text-xs">
                 <div class="flex justify-between">
@@ -141,45 +140,65 @@
         <p>&copy; 2026 Panitia Pelaksana HUT ke-40 PRAMYOSMAR SMK KAL 1 Surabaya</p>
     </footer>
 
-    <!-- SCRIPT GENERATE QR TICKET -->
+    <!-- SCRIPT SUPABASE & QR GENERATOR -->
     <script>
+        const SUPABASE_URL = 'https://dilfnlqbfyvdgunqhixr.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_U2hNCCl3VcpT1MXnpunCDg_RHX6kNHR';
+        
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         const regForm = document.getElementById('regForm');
         const formContainer = document.getElementById('formContainer');
         const ticketCard = document.getElementById('ticketCard');
+        const submitBtn = document.getElementById('submitBtn');
 
-        regForm.addEventListener('submit', function(e) {
+        regForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const nama = document.getElementById('regNama').value.trim();
             const angkatan = document.getElementById('regAngkatan').value.trim();
             const wa = document.getElementById('regWa').value.trim();
             const status = document.getElementById('regStatus').value;
 
-            // Masukkan data ke tampilan tiket
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Menyimpan ke Server...';
+
+            const ticketId = 'PRAM40-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+            const { error } = await _supabase
+                .from('registrasi')
+                .insert([{ 
+                    ticket_id: ticketId,
+                    nama: nama, 
+                    angkatan: angkatan, 
+                    wa: wa, 
+                    status: status,
+                    hadir: false 
+                }]);
+
+            if (error) {
+                alert('Gagal menyimpan ke database: ' + error.message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Generate E-Tiket Kehadiran';
+                return;
+            }
+
             document.getElementById('outNama').textContent = nama;
             document.getElementById('outAngkatan').textContent = angkatan;
             document.getElementById('outStatus').textContent = status;
 
-            // Kosongkan QR sebelumnya jika ada
-            document.getElementById('qrcode').innerHTML = "";
-
-            // Buat teks unik untuk QR code
-            const qrText = `PRAMYOSMAR40|${nama}|${angkatan}|${wa}|${status}`;
-
-            // Generate QR Code menggunakan library qrcode.js
-            new QRCode(document.getElementById("qrcode"), {
-                text: qrText,
-                width: 128,
-                height: 128,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
+            const qrText = `${ticketId}|${nama}|${angkatan}`;
+            const qr = new QRious({
+                element: document.getElementById('qrCodeCanvas'),
+                value: qrText,
+                size: 128,
+                background: '#ffffff',
+                foreground: '#000000'
             });
 
-            // Sembunyikan form, tampilkan tiket
             formContainer.classList.add('hidden');
             ticketCard.classList.remove('hidden');
         });
     </script>
 </body>
-  </html>
-  
+</html>
